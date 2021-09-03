@@ -1,3 +1,7 @@
+
+# Version 13.0.1-dev-1.0
+* (iOS & Android): all features removed except Analytics and FCM
+
 # Version 13.0.1
 * (iOS) Fix `onTokenRefresh` to return FCM token (not installation auth token).
     * Resolves [#637](https://github.com/dpa99c/cordova-plugin-firebasex/issues/637)
