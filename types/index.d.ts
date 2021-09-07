@@ -112,5 +112,9 @@ export interface FirebasePlugin {
         userName: string,
         userValue: string
     ): void
+    getInstallationId(
+        success: (value: string) => void,
+        error: (err: string) => void
+    ): void
 }
 declare var FirebasePlugin: FirebasePlugin;
