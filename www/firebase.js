@@ -1,11 +1,5 @@
 var exec = require('cordova/exec');
 
-var ensureBooleanFn = function (callback){
-    return function(result){
-        callback(ensureBoolean(result));
-    }
-};
-
 var ensureBoolean = function(value){
     if(value === "true"){
         value = true;
@@ -15,16 +9,18 @@ var ensureBoolean = function(value){
     return !!value;
 };
 
-var onAuthStateChangeCallback = function(){};
+var execAsPromise = function (command, args) {
+    if (args === void 0) { args = []; }
+    return new Promise(function (resolve, reject) {
+        exec(resolve, reject, 'FirebasePlugin', command, args);
+    });
+};
+
 var onInstallationIdChangeCallback = function(){};
 
 /***********************
  * Protected internals
  ***********************/
-exports._onAuthStateChange = function(userSignedIn){
-    onAuthStateChangeCallback(userSignedIn);
-};
-
 exports._onInstallationIdChangeCallback = function(installationId){
     onInstallationIdChangeCallback(installationId);
 };
@@ -34,12 +30,12 @@ exports._onInstallationIdChangeCallback = function(installationId){
  **************/
 
 // Notifications
-exports.getToken = function (success, error) {
-  exec(success, error, "FirebasePlugin", "getToken", []);
+exports.getToken = function () {
+    return execAsPromise('getToken');
 };
 
-exports.getAPNSToken = function (success, error) {
-  exec(success, error, "FirebasePlugin", "getAPNSToken", []);
+exports.getAPNSToken = function () {
+    return execAsPromise('getAPNSToken');
 };
 
 exports.onMessageReceived = function (success, error) {
@@ -54,108 +50,110 @@ exports.onApnsTokenReceived = function (success, error) {
     exec(success, error, "FirebasePlugin", "onApnsTokenReceived", []);
 };
 
-exports.subscribe = function (topic, success, error) {
-  exec(success, error, "FirebasePlugin", "subscribe", [topic]);
+exports.subscribe = function (topic) {
+    return execAsPromise('subscribe', [topic]);
 };
 
-exports.unsubscribe = function (topic, success, error) {
-  exec(success, error, "FirebasePlugin", "unsubscribe", [topic]);
+exports.unsubscribe = function (topic) {
+    return execAsPromise('unsubscribe', [topic]);
 };
 
-exports.unregister = function (success, error) {
-  exec(success, error, "FirebasePlugin", "unregister", []);
+exports.unregister = function () {
+    return execAsPromise('unregister');
 };
 
-exports.isAutoInitEnabled = function (success, error) {
-    exec(success, error, "FirebasePlugin", "isAutoInitEnabled", []);
+exports.isAutoInitEnabled = function () {
+    return execAsPromise('isAutoInitEnabled');
 };
 
-exports.setAutoInitEnabled = function (enabled, success, error) {
-    exec(success, error, "FirebasePlugin", "setAutoInitEnabled", [!!enabled]);
+exports.setAutoInitEnabled = function (enabled) {
+    return execAsPromise('setAutoInitEnabled', [!!enabled]);
 };
 
-exports.clearAllNotifications = function (success, error) {
-    exec(success, error, "FirebasePlugin", "clearAllNotifications", []);
+exports.clearAllNotifications = function () {
+    return execAsPromise('clearAllNotifications');
 };
 
 // Notifications - iOS-only
-exports.onOpenSettings = function (success, error) {
-  exec(success, error, "FirebasePlugin", "onOpenSettings", []);
+exports.onOpenSettings = function () {
+    return execAsPromise('onOpenSettings');
 };
 
-exports.setBadgeNumber = function (number, success, error) {
-    exec(success, error, "FirebasePlugin", "setBadgeNumber", [number]);
+exports.setBadgeNumber = function (number) {
+    return execAsPromise('setBadgeNumber', [number]);
 };
 
-exports.getBadgeNumber = function (success, error) {
-    exec(success, error, "FirebasePlugin", "getBadgeNumber", []);
+exports.getBadgeNumber = function () {
+    return execAsPromise('getBadgeNumber');
 };
 
-exports.grantPermission = function (success, error, requestWithProvidesAppNotificationSettings) {
-    exec(ensureBooleanFn(success), error, "FirebasePlugin", "grantPermission", [ensureBoolean(requestWithProvidesAppNotificationSettings)]);
+exports.grantPermission = function (requestWithProvidesAppNotificationSettings) {
+    return execAsPromise('grantPermission', [ensureBoolean(requestWithProvidesAppNotificationSettings)])
+        .then(function (value) { return ensureBoolean(value); })
 };
 
-exports.hasPermission = function (success, error) {
-    exec(ensureBooleanFn(success), error, "FirebasePlugin", "hasPermission", []);
+exports.hasPermission = function () {
+    return execAsPromise('hasPermission')
+        .then(function (value) { return ensureBoolean(value); })
 };
 
 // Notifications - Android-only
-exports.setDefaultChannel = function (options, success, error) {
-    exec(success, error, "FirebasePlugin", "setDefaultChannel", [options]);
+exports.setDefaultChannel = function (options) {
+    return execAsPromise('setDefaultChannel', [options]);
 };
 
-exports.createChannel = function (options, success, error) {
-    exec(success, error, "FirebasePlugin", "createChannel", [options]);
+exports.createChannel = function (options) {
+    return execAsPromise('createChannel', [options]);
 };
 
-exports.deleteChannel = function (channelID, success, error) {
-    exec(success, error, "FirebasePlugin", "deleteChannel", [channelID]);
+exports.deleteChannel = function (channelID) {
+    return execAsPromise('deleteChannel', [channelID]);
 };
 
-exports.listChannels = function (success, error) {
-    exec(success, error, "FirebasePlugin", "listChannels", []);
+exports.listChannels = function () {
+    return execAsPromise('listChannels');
 };
 
 // Analytics
-exports.setAnalyticsCollectionEnabled = function (enabled, success, error) {
-    exec(success, error, "FirebasePlugin", "setAnalyticsCollectionEnabled", [!!enabled]);
+exports.setAnalyticsCollectionEnabled = function (enabled) {
+    return execAsPromise('setAnalyticsCollectionEnabled', [!!enabled]);
 };
 
-exports.isAnalyticsCollectionEnabled = function (success, error) {
-    exec(success, error, "FirebasePlugin", "isAnalyticsCollectionEnabled", []);
+exports.isAnalyticsCollectionEnabled = function () {
+    return execAsPromise('isAnalyticsCollectionEnabled');
 };
 
-exports.logEvent = function (name, params, success, error) {
-  exec(success, error, "FirebasePlugin", "logEvent", [name, params]);
+exports.logEvent = function (name, params) {
+    return execAsPromise('logEvent', [name, params]);
 };
 
-exports.setScreenName = function (name, success, error) {
-  exec(success, error, "FirebasePlugin", "setScreenName", [name]);
+exports.setScreenName = function (name) {
+    return execAsPromise('setScreenName', [name]);
 };
 
-exports.setUserId = function (id, success, error) {
-  exec(success, error, "FirebasePlugin", "setUserId", [id]);
+exports.setUserId = function (id) {
+    return execAsPromise('setUserId', [id]);
 };
 
-exports.setUserProperty = function (name, value, success, error) {
-  exec(success, error, "FirebasePlugin", "setUserProperty", [name, value]);
+exports.setUserProperty = function (name, value) {
+    return execAsPromise('setUserProperty', [name, value]);
 };
 
 // Installations
-exports.getId = function (success, error) {
-    exec(success, error, "FirebasePlugin", "getId", []);
+exports.getId = function () {
+    return execAsPromise('getId');
 };
 
-exports.getInstallationId = function (success, error) {
-    exec(success, error, "FirebasePlugin", "getInstallationId", []);
+exports.getInstallationId = function () {
+    return execAsPromise('getInstallationId');
 };
 
-exports.getInstallationToken = function (success, error) {
-    exec(success, error, "FirebasePlugin", "getInstallationToken", []);
+exports.getInstallationToken = function () {
+    return execAsPromise('getInstallationToken');
 };
 
-exports.deleteInstallationId = function (success, error) {
-    exec(success, error, "FirebasePlugin", "deleteInstallationId", []);
+exports.deleteInstallationId = function () {
+    return execAsPromise('deleteInstallationId');
 };
 
 exports.registerInstallationIdChangeListener = function(fn){

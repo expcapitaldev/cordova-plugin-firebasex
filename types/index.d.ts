@@ -1,120 +1,91 @@
-export interface IChannelOptions {
-    id: string
-    name?: string
-    description?: string
-    sound?: string
-    vibration?: boolean | number[]
-    light?: boolean
-    lightColor?: string
-    importance?: 0 | 1 | 2 | 3 | 4
-    badge?: boolean
-    visibility?: -1 | 0 | 1
+interface IFirebaseChannelOptions {
+    id: string;
+    name?: string;
+    description?: string;
+    sound?: string;
+    vibration?: boolean | number[];
+    light?: boolean;
+    lightColor?: string;
+    importance?: 0 | 1 | 2 | 3 | 4;
+    badge?: boolean;
+    visibility?: -1 | 0 | 1;
 }
 
-export interface FirebasePlugin {
-    getId(
-        success: (value: string) => void,
-        error: (err: string) => void
-    ): void
-    getToken(
-        success: (value: string) => void,
-        error: (err: string) => void
-    ): void
+interface IFirebaseMessageReceived {
+    tap?: 'foreground' | 'background';
+    messageType: 'notification' | 'data';
+    deeplink?: string;
+}
+
+interface IFirebasePlugin {
+    getId(): Promise<string>;
+
+    getToken(): Promise<string>;
+
     onTokenRefresh(
         success: (value: string) => void,
-        error: (err: string) => void): void
-    getAPNSToken(
-        success: (value: string) => void,
         error: (err: string) => void
-    ): void
+    ): void;
+
+    getAPNSToken(): Promise<string>;
+
     onApnsTokenReceived(
         success: (value: string) => void,
         error: (err: string) => void
-    ): void
+    ): void;
+
     onMessageReceived(
-        success: (value: object) => void,
+        success: (data: IFirebaseMessageReceived) => void,
         error: (err: string) => void
-    ): void
-    onOpenSettings(
-        success: () => void,
-        error: (err: string) => void
-    ): void
-    grantPermission(
-        success: (value: boolean) => void,
-        error: (err: string) => void,
-        requestWithProvidesAppNotificationSettings?: boolean
-    ): void
-    hasPermission(
-        success: (value: boolean) => void,
-        error: (err: string) => void
-    ): void
-    unregister(): void
-    setBadgeNumber(
-        badgeNumber: number
-    ): void
-    getBadgeNumber(
-        success: (badgeNumber: number) => void,
-        error: (err: string) => void
-    ): void
-    clearAllNotifications(): void
-    subscribe(
-        topic: string,
-        success?: () => void,
-        error?: (err: string) => void
-    ): void
-    unsubscribe(
-        topic: string,
-        success?: () => void,
-        error?: (err: string) => void
-    ): void
-    isAutoInitEnabled(
-        success: (enabled: boolean) => void,
-        error?: (err: string) => void
-    ): void
-    setAutoInitEnabled(
-        enabled: boolean,
-        success?: () => void,
-        error?: (err: string) => void
-    ): void
-    createChannel(
-        channel: IChannelOptions,
-        success: () => void,
-        error: (err: string) => void
-    ): void
-    setDefaultChannel(
-        channel: IChannelOptions,
-        success: () => void,
-        error: (err: string) => void
-    ): void
-    deleteChannel(
-        channel: string,
-        success: () => void,
-        error: (err: string) => void
-    ): void
-    listChannels(
-        success: (list: { id: string; name: string }[]) => void,
-        error: (err: string) => void
-    ): void
-    setAnalyticsCollectionEnabled(
-        setEnabled: boolean
-    ): void
-    logEvent(
-        eventName: string,
-        eventProperties: object
-    ): void
-    setScreenName(
-        screenName: string
-    ): void
-    setUserId(
-        userId: string
-    ): void
-    setUserProperty(
-        userName: string,
-        userValue: string
-    ): void
-    getInstallationId(
-        success: (value: string) => void,
-        error: (err: string) => void
-    ): void
+    ): void;
+
+    onOpenSettings(): Promise<void>;
+
+    grantPermission(requestWithProvidesAppNotificationSettings?: boolean): Promise<boolean>;
+
+    hasPermission(): Promise<boolean>;
+
+    unregister(): Promise<void>;
+
+    setBadgeNumber(badgeNumber: number): Promise<void>;
+
+    getBadgeNumber(): Promise<number>;
+
+    clearAllNotifications(): Promise<void>;
+
+    subscribe(topic: string): Promise<void>;
+
+    unsubscribe(topic: string): Promise<void>;
+
+    isAutoInitEnabled(): Promise<boolean>;
+
+    setAutoInitEnabled(enabled: boolean): Promise<void>;
+
+    createChannel(channel: IFirebaseChannelOptions): Promise<void>;
+
+    setDefaultChannel(channel: IFirebaseChannelOptions): Promise<void>;
+
+    deleteChannel(channel: string): Promise<void>;
+
+    listChannels(): Promise<{ id: string; name: string }[]>;
+
+    setAnalyticsCollectionEnabled(setEnabled: boolean): Promise<void>;
+
+    logEvent(eventName: string, eventProperties: object): Promise<void>;
+
+    setScreenName(screenName: string): Promise<void>;
+
+    setUserId(userId: string): Promise<void>;
+
+    setUserProperty(userName: string, userValue: string): Promise<void>;
+
+    getInstallationId(): Promise<string>;
+
+    registerInstallationIdChangeListener(
+        callback: (installationId: string) => void,
+    ): void;
 }
-declare var FirebasePlugin: FirebasePlugin;
+
+interface Window {
+    FirebasePlugin: IFirebasePlugin;
+}
