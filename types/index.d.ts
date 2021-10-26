@@ -81,6 +81,8 @@ interface IFirebasePlugin {
 
     getInstallationId(): Promise<string>;
 
+    getAppInstanceId(): Promise<string>;
+
     registerInstallationIdChangeListener(
         callback: (installationId: string) => void,
     ): void;

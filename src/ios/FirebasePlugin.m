@@ -589,6 +589,17 @@ static NSString* currentInstallationId;
     }];
 }
 
+- (void)getAppInstanceId:(CDVInvokedUrlCommand *)command {
+    [self.commandDelegate runInBackground:^{
+        @try {
+            NSString *appInstanceID = [FIRAnalytics appInstanceID];
+            [self sendPluginStringResult:appInstanceID command:command callbackId:command.callbackId];
+        }@catch (NSException *exception) {
+            [self handlePluginExceptionWithContext:exception :command];
+        }
+    }];
+}
+
 - (void) getInstallationToken:(CDVInvokedUrlCommand*)command {
     [self.commandDelegate runInBackground:^{
         @try {

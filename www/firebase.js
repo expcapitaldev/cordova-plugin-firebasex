@@ -148,6 +148,10 @@ exports.getInstallationId = function () {
     return execAsPromise('getInstallationId');
 };
 
+exports.getAppInstanceId = function () {
+    return execAsPromise('getAppInstanceId');
+};
+
 exports.getInstallationToken = function () {
     return execAsPromise('getInstallationToken');
 };

@@ -158,6 +158,8 @@ public class FirebasePlugin extends CordovaPlugin {
                 this.deleteInstallationId(args, callbackContext);
             } else if (action.equals("getInstallationId")) {
                 this.getInstallationId(args, callbackContext);
+            } else if (action.equals("getAppInstanceId")) {
+                this.getAppInstanceId(callbackContext);
             } else if (action.equals("getInstallationToken")) {
                 this.getInstallationToken(args, callbackContext);
             } else{
@@ -792,6 +794,18 @@ public class FirebasePlugin extends CordovaPlugin {
             public void run() {
                 try {
                     handleTaskOutcomeWithStringResult(FirebaseInstallations.getInstance().getId(), callbackContext);
+                } catch (Exception e) {
+                    handleExceptionWithContext(e, callbackContext);
+                }
+            }
+        });
+    }
+
+    private void getAppInstanceId(CallbackContext callbackContext) throws JSONException {
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+                try {
+                    handleTaskOutcomeWithStringResult(mFirebaseAnalytics.getAppInstanceId(), callbackContext);
                 } catch (Exception e) {
                     handleExceptionWithContext(e, callbackContext);
                 }

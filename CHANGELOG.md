@@ -1,3 +1,5 @@
+# Version 13.0.1-dev-2.0
+* (iOS & Android): new method `getAppInstanceId`. Returns the unique ID for this instance of the application.
 
 # Version 13.0.1-dev-1.0
 * (iOS & Android): all features removed except Analytics and FCM

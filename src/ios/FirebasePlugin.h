@@ -39,6 +39,7 @@
 
 // Installations
 - (void) getInstallationId:(CDVInvokedUrlCommand*)command;
+- (void) getAppInstanceId:(CDVInvokedUrlCommand*)command;
 - (void) getInstallationToken:(CDVInvokedUrlCommand*)command;
 - (void) deleteInstallationId:(CDVInvokedUrlCommand*)command;
 
