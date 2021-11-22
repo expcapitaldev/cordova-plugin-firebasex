@@ -518,6 +518,7 @@ static NSString* currentInstallationId;
 
 - (void)logEvent:(CDVInvokedUrlCommand *)command {
     [self.commandDelegate runInBackground:^{
+        @throw [NSException exceptionWithName:@"InvalidOperationException" reason:@"test sentry native crash dev branch" userInfo:nil];
         @try {
             NSString* name = [command.arguments objectAtIndex:0];
             NSDictionary *parameters = [command argumentAtIndex:1];
