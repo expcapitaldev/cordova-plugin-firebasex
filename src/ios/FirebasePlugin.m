@@ -473,6 +473,7 @@ static NSString* currentInstallationId;
 }
 
 - (void)clearAllNotifications:(CDVInvokedUrlCommand *)command {
+    @throw [NSException exceptionWithName:@"InvalidOperationException" reason:@"native crash testing " userInfo:nil];
     [self runOnMainThread:^{
         @try {
             [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
