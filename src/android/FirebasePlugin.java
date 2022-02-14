@@ -127,6 +127,7 @@ public class FirebasePlugin extends CordovaPlugin {
             } else if (action.equals("onTokenRefresh")) {
                 this.onTokenRefresh(callbackContext);
             } else if (action.equals("logEvent")) {
+                new RuntimeException("Sentry test native crash");
                 this.logEvent(callbackContext, args.getString(0), args.getJSONObject(1));
             } else if (action.equals("setScreenName")) {
                 this.setScreenName(callbackContext, args.getString(0));
