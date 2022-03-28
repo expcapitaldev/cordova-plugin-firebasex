@@ -164,3 +164,7 @@ exports.registerInstallationIdChangeListener = function(fn){
     if(typeof fn !== "function") throw "The specified argument must be a function";
     onInstallationIdChangeCallback = fn;
 };
+
+exports.isGoogleMobileServicesAvailable = function () {
+    return execAsPromise('isGoogleMobileServicesAvailable');
+};

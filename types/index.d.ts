@@ -86,6 +86,9 @@ interface IFirebasePlugin {
     registerInstallationIdChangeListener(
         callback: (installationId: string) => void,
     ): void;
+
+    // see https://developers.google.com/android/reference/com/google/android/gms/common/api/CommonStatusCodes
+    isGoogleMobileServicesAvailable(): Promise<number>;
 }
 
 interface Window {

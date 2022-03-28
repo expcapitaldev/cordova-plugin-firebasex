@@ -1,3 +1,6 @@
+# Version 13.0.1-dev-3.0
+* (Android): new method `isGoogleMobileServicesAvailable`. Returns the status code. See `https://developers.google.com/android/reference/com/google/android/gms/common/api/CommonStatusCodes`
+
 # Version 13.0.1-dev-2.0
 * (iOS & Android): new method `getAppInstanceId`. Returns the unique ID for this instance of the application.
 
