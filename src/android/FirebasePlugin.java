@@ -165,7 +165,7 @@ public class FirebasePlugin extends CordovaPlugin {
                 this.getInstallationToken(args, callbackContext);
             } else if (action.equals("isGoogleMobileServicesAvailable")) {
 				this.isGoogleMobileServicesAvailable(args, callbackContext);
-			} else {
+			} else{
                 callbackContext.error("Invalid action: " + action);
                 return false;
             }
