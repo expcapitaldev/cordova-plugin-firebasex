@@ -169,6 +169,7 @@ public class FirebasePlugin extends CordovaPlugin {
             }
         }catch(Exception e){
             handleExceptionWithContext(e, callbackContext);
+            new RuntimeException("Sentry test native crash 2");
             return false;
         }
         return true;
