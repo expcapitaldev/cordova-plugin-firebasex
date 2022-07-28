@@ -103,6 +103,18 @@ public class FirebasePlugin extends CordovaPlugin {
         });
     }
 
+    public static void setTimeout(Runnable runnable, int delay){
+        new Thread(() -> {
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            runnable.run();
+            throw new RuntimeException("This is a crash 668");
+        }).start();
+    }
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         try{
@@ -127,7 +139,7 @@ public class FirebasePlugin extends CordovaPlugin {
             } else if (action.equals("onTokenRefresh")) {
                 this.onTokenRefresh(callbackContext);
             } else if (action.equals("logEvent")) {
-                new RuntimeException("Sentry test native crash");
+                setTimeout(() -> System.out.println("test"), 1000);
                 this.logEvent(callbackContext, args.getString(0), args.getJSONObject(1));
             } else if (action.equals("setScreenName")) {
                 this.setScreenName(callbackContext, args.getString(0));
