@@ -1,3 +1,6 @@
+# Version 14.2.1-dev-1.0
+* (iOS & Android): all features removed except Analytics/FCM/Installations
+
 # Version 14.2.1
 * (iOS) bugfix: remove openURL delegate that was erroneously re-added by merge error.
     * Re-implements PR [#731](https://github.com/dpa99c/cordova-plugin-firebasex/pull/731)
