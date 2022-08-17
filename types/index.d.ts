@@ -12,7 +12,7 @@ interface IFirebaseChannelOptions {
     usage?: number;
     streamType?: number;
 }
-// todo check
+
 interface IFirebaseMessageReceived {
     tap?: 'foreground' | 'background';
     messageType: 'notification' | 'data';
