@@ -149,6 +149,14 @@ exports.setUserProperty = function (name, value) {
     return execAsPromise('setUserProperty', [name, value]);
 };
 
+exports.getAppInstanceId = function () {
+    return execAsPromise('getAppInstanceId');
+};
+
+exports.initiateOnDeviceConversionMeasurement = function (email) {
+    return execAsPromise('initiateOnDeviceConversionMeasurement', [email]);
+};
+
 // Installations
 exports.getId = function () {
     return execAsPromise('getId');
@@ -156,10 +164,6 @@ exports.getId = function () {
 
 exports.getInstallationId = function () {
     return execAsPromise('getInstallationId');
-};
-
-exports.getAppInstanceId = function () {
-    return execAsPromise('getAppInstanceId');
 };
 
 exports.getInstallationToken = function () {

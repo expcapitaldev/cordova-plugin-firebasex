@@ -89,6 +89,8 @@ interface IFirebasePlugin {
 
     getAppInstanceId(): Promise<string>;
 
+    initiateOnDeviceConversionMeasurement(email: string): Promise<void>;
+
     registerInstallationIdChangeListener(
         callback: (installationId: string) => void,
     ): void;

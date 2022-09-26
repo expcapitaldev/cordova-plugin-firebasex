@@ -660,6 +660,31 @@ static NSString* currentInstallationId;
     }];
 }
 
+- (void)getAppInstanceId:(CDVInvokedUrlCommand *)command {
+    [self.commandDelegate runInBackground:^{
+        @try {
+            NSString *appInstanceID = [FIRAnalytics appInstanceID];
+            [self sendPluginStringResult:appInstanceID command:command callbackId:command.callbackId];
+        }@catch (NSException *exception) {
+            [self handlePluginExceptionWithContext:exception :command];
+        }
+    }];
+}
+
+- (void)initiateOnDeviceConversionMeasurement:(CDVInvokedUrlCommand *)command {
+    [self.commandDelegate runInBackground:^{
+        @try {
+            NSString* email = [command.arguments objectAtIndex:0];
+            [FIRAnalytics initiateOnDeviceConversionMeasurementWithEmailAddress:email];
+
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }@catch (NSException *exception) {
+            [self handlePluginExceptionWithContext:exception :command];
+        }
+    }];
+}
+
 /*
  * Installations
  */
@@ -669,17 +694,6 @@ static NSString* currentInstallationId;
             [[FIRInstallations installations] installationIDWithCompletion:^(NSString *identifier, NSError *error) {
                 [self handleStringResultWithPotentialError:error command:command result:identifier];
             }];
-        }@catch (NSException *exception) {
-            [self handlePluginExceptionWithContext:exception :command];
-        }
-    }];
-}
-
-- (void)getAppInstanceId:(CDVInvokedUrlCommand *)command {
-    [self.commandDelegate runInBackground:^{
-        @try {
-            NSString *appInstanceID = [FIRAnalytics appInstanceID];
-            [self sendPluginStringResult:appInstanceID command:command callbackId:command.callbackId];
         }@catch (NSException *exception) {
             [self handlePluginExceptionWithContext:exception :command];
         }

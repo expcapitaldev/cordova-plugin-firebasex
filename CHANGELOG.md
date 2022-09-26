@@ -1,3 +1,6 @@
+# Version 14.2.1-dev-2.0
+* (iOS): device conversion measurement added
+
 # Version 14.2.1-dev-1.0
 * (iOS & Android): all features removed except Analytics/FCM/Installations
 
