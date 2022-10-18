@@ -20,6 +20,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.util.Log;
 
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -163,6 +164,8 @@ public class FirebasePlugin extends CordovaPlugin {
                 this.getAppInstanceId(callbackContext);
             } else if (action.equals("getInstallationToken")) {
                 this.getInstallationToken(args, callbackContext);
+            } else if (action.equals("isGoogleMobileServicesAvailable")) {
+                this.isGoogleMobileServicesAvailable(args, callbackContext);
             } else{
                 callbackContext.error("Invalid action: " + action);
                 return false;
@@ -843,6 +846,19 @@ public class FirebasePlugin extends CordovaPlugin {
                                     }
                                 }
                             });
+                } catch (Exception e) {
+                    handleExceptionWithContext(e, callbackContext);
+                }
+            }
+        });
+    }
+
+    public void isGoogleMobileServicesAvailable(JSONArray args, CallbackContext callbackContext) throws JSONException {
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+                try {
+                    final int isGoogleMobileServicesAvailable = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(applicationContext);
+                    callbackContext.success(isGoogleMobileServicesAvailable);
                 } catch (Exception e) {
                     handleExceptionWithContext(e, callbackContext);
                 }
