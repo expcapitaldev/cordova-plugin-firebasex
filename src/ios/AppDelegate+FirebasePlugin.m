@@ -102,7 +102,8 @@ static NSDictionary* mutableUserInfo;
 # pragma mark - FIRMessagingDelegate
 - (void)messaging:(FIRMessaging *)messaging didReceiveRegistrationToken:(NSString *)fcmToken {
     @try{
-        [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"didReceiveRegistrationToken: %@", fcmToken]];
+        // [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"didReceiveRegistrationToken: %@", fcmToken]];
+        [FirebasePlugin.firebasePlugin _logMessage:@"didReceiveRegistrationToken"];
         [FirebasePlugin.firebasePlugin sendToken:fcmToken];
     }@catch (NSException *exception) {
         [FirebasePlugin.firebasePlugin handlePluginExceptionWithoutContext:exception];
@@ -111,7 +112,8 @@ static NSDictionary* mutableUserInfo;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [FIRMessaging messaging].APNSToken = deviceToken;
-    [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"didRegisterForRemoteNotificationsWithDeviceToken: %@", deviceToken]];
+    // [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"didRegisterForRemoteNotificationsWithDeviceToken: %@", deviceToken]];
+    [FirebasePlugin.firebasePlugin _logMessage:@"didRegisterForRemoteNotificationsWithDeviceToken"];
     [FirebasePlugin.firebasePlugin sendApnsToken:[FirebasePlugin.firebasePlugin hexadecimalStringFromData:deviceToken]];
 }
 
@@ -141,7 +143,8 @@ static NSDictionary* mutableUserInfo;
             [mutableUserInfo setValue:@"data" forKey:@"messageType"];
         }
 
-        [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"didReceiveRemoteNotification: %@", mutableUserInfo]];
+        // [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"didReceiveRemoteNotification: %@", mutableUserInfo]];
+        [FirebasePlugin.firebasePlugin _logMessage:@"didReceiveRemoteNotification"];
 
         completionHandler(UIBackgroundFetchResultNewData);
         if([self.applicationInBackground isEqual:[NSNumber numberWithBool:YES]] && isContentAvailable){
@@ -309,7 +312,8 @@ static NSDictionary* mutableUserInfo;
         }
 
         // Print full message.
-        [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"willPresentNotification: %@", mutableUserInfo]];
+        // [FirebasePlugin.firebasePlugin _logMessage:[NSString stringWithFormat:@"willPresentNotification: %@", mutableUserInfo]];
+        [FirebasePlugin.firebasePlugin _logMessage:@"willPresentNotification"];
 
 
         NSDictionary* aps = [mutableUserInfo objectForKey:@"aps"];

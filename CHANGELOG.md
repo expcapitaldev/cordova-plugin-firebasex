@@ -1,4 +1,7 @@
-# Version 4.2.1-dev-3.0
+# Version 14.2.1-dev-3.1
+* (iOS): delete log with user data
+
+# Version 14.2.1-dev-3.0
 * (Android): new method `isGoogleMobileServicesAvailable`. Returns the status code. See `https://developers.google.com/android/reference/com/google/android/gms/common/api/CommonStatusCodes`
 
 # Version 14.2.1-dev-2.0
